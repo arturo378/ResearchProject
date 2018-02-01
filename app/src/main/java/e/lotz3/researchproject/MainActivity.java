@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         lineChart.setData(data);
         lineChart.invalidate();
 
-        final String[] quarters = new String[] { "Q1", "Q2", "Q3", "Q4" };
+
 
 
 
