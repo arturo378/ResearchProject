@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         lineChart.setData(data);
         lineChart.invalidate();
 
-
+        double B;
 
 
 
