@@ -1,8 +1,14 @@
 package e.lotz3.researchproject;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -24,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     LineChart lineChart;//creates linechart
-
+    LineDataSet setComp1, setComp2, setComp3, setComp4, setComp5, setComp6;
 
     //creates ArrayList which holds data for each dataset
     List<Entry> valsComp1 = new ArrayList<Entry>();
@@ -33,15 +39,16 @@ public class MainActivity extends AppCompatActivity {
     List<Entry> valsComp4 = new ArrayList<Entry>();
     List<Entry> valsComp5 = new ArrayList<Entry>();
     List<Entry> valsComp6 = new ArrayList<Entry>();
-
-
+    private CheckBox buttonebr, buttonetr, buttonfsc, buttonjdp, buttonphr, buttontcr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lineChart = (LineChart)findViewById(R.id.lineChart);
+        lineChart = (LineChart) findViewById(R.id.lineChart);
+
+
 
         //Entries for worksite 1 (EBR)
         Entry c1e1 = new Entry(0f, 875.86f);
@@ -52,11 +59,7 @@ public class MainActivity extends AppCompatActivity {
         valsComp1.add(c1e3);
         Entry c1e4 = new Entry(3f, 1305.12f);
         valsComp1.add(c1e4);
-
-
-
         //Entries for worksite 2 (ETR)
-
         Entry c2e1 = new Entry(0f, 894.87f);
         valsComp2.add(c2e1);
         Entry c2e2 = new Entry(1f, 1028.67f);
@@ -67,10 +70,9 @@ public class MainActivity extends AppCompatActivity {
         valsComp2.add(c2e4);
         Entry c2e5 = new Entry(4f, 939.13f);
         valsComp2.add(c2e5);
-        Entry c2e6 = new Entry(5f,939.03f);
+        Entry c2e6 = new Entry(5f, 939.03f);
         valsComp2.add(c2e6);
         //Entries for worksite 3 (FSC)
-
         Entry c3e1 = new Entry(0f, 1260.43f);
         valsComp3.add(c3e1);
         Entry c3e2 = new Entry(1f, 1252.97f);
@@ -85,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
         valsComp3.add(c3e6);
         Entry c3e7 = new Entry(6f, 1442.43f);
         valsComp3.add(c3e7);
-
-
         //Entries for worksite 4 (JDP)
         Entry c4e1 = new Entry(0f, 1027.66f);
         valsComp4.add(c4e1);
@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         valsComp5.add(c5e3);
 
 
-
         //Entries for worksite 6 (TCR)
         Entry c6e1 = new Entry(0f, 524f);
         valsComp6.add(c6e1);
@@ -131,42 +130,43 @@ public class MainActivity extends AppCompatActivity {
         valsComp6.add(c6e7);
 
 
-
-
-
-
-
-
-
-
-
         //Legend setup
-        LineDataSet setComp1 = new LineDataSet(valsComp1, "EBR");
+        setComp1 = new LineDataSet(valsComp1, "EBR");
         setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp1.setColor(Color.YELLOW);
         setComp1.setDrawCircles(true);
-        LineDataSet setComp2 = new LineDataSet(valsComp2, "ETR");
+        addListenerebr();
+
+
+        setComp2 = new LineDataSet(valsComp2, "ETR");
         setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp2.setColor(Color.MAGENTA);
         setComp2.setDrawCircles(true);
-        LineDataSet setComp3 = new LineDataSet(valsComp3, "FSC");
+        addListeneretr();
+
+        setComp3 = new LineDataSet(valsComp3, "FSC");
         setComp3.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp3.setColor(Color.GREEN);
         setComp3.setDrawCircles(true);
-        LineDataSet setComp4 = new LineDataSet(valsComp4, "JDP");
+        addListenerfsc();
+
+        setComp4 = new LineDataSet(valsComp4, "JDP");
         setComp4.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp4.setColor(Color.BLUE);
         setComp4.setDrawCircles(true);
-        LineDataSet setComp5 = new LineDataSet(valsComp5, "PHR");
+        addListenerjdp();
+
+        setComp5 = new LineDataSet(valsComp5, "PHR");
         setComp5.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp5.setColor(Color.BLACK);
         setComp5.setDrawCircles(true);
-        LineDataSet setComp6 = new LineDataSet(valsComp6, "TCR");
+        addListenerphr();
+
+        setComp6 = new LineDataSet(valsComp6, "TCR");
         setComp6.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp6.setColor(Color.RED);
-
-
-
+        setComp6.setVisible(true);
+        addListenertcr();
 
 
         List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
@@ -181,23 +181,130 @@ public class MainActivity extends AppCompatActivity {
         lineChart.setData(data);
         lineChart.invalidate();
 
-        double B;
+    }
+
+        public void addListenerebr(){
+
+        buttonebr = (CheckBox) findViewById(R.id.ebr);
+
+        buttonebr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(((CheckBox) v).isChecked()){
+                    setComp1.setVisible(false);
+                }else
+                    setComp1.setVisible(true);
+
+            }
+        });
 
 
 
+        }
 
+    public void addListeneretr(){
 
+        buttonebr = (CheckBox) findViewById(R.id.etr);
 
+        buttonebr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if(((CheckBox) v).isChecked()){
+                    setComp2.setVisible(false);
+                }else
+                    setComp2.setVisible(true);
 
-
-
-
-
-
+            }
+        });
 
 
 
     }
+
+
+    public void addListenerfsc(){
+
+        buttonebr = (CheckBox) findViewById(R.id.fsc);
+
+        buttonebr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(((CheckBox) v).isChecked()){
+                    setComp3.setVisible(false);
+                }else
+                    setComp3.setVisible(true);
+
+            }
+        });
+
+
+
+    }
+
+    public void addListenerjdp(){
+
+        buttonebr = (CheckBox) findViewById(R.id.jdp);
+
+        buttonebr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(((CheckBox) v).isChecked()){
+                    setComp4.setVisible(false);
+                }else
+                    setComp4.setVisible(true);
+
+            }
+        });
+
+
+
+    }
+
+    public void addListenerphr(){
+
+        buttonebr = (CheckBox) findViewById(R.id.phr);
+
+        buttonebr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(((CheckBox) v).isChecked()){
+                    setComp5.setVisible(false);
+                }else
+                    setComp5.setVisible(true);
+
+            }
+        });
+
+
+
+    }
+
+    public void addListenertcr(){
+
+        buttonebr = (CheckBox) findViewById(R.id.tcr);
+
+        buttonebr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(((CheckBox) v).isChecked()){
+                    setComp6.setVisible(false);
+                }else
+                    setComp6.setVisible(true);
+
+            }
+        });
+
+
+
+    }
+
+
+
 
 }
