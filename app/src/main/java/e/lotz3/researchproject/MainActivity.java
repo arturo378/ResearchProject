@@ -1,14 +1,12 @@
 package e.lotz3.researchproject;
 
-import android.content.Context;
+
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -22,7 +20,13 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineRadarDataSet;
 
 
-import java.lang.reflect.Array;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     LineChart lineChart;//creates linechart
     LineDataSet setComp1, setComp2, setComp3, setComp4, setComp5, setComp6;
-
+    String JSON_STRING = "http://morrowrenewablesflowdata.com/Androiddbconnection.php";
+    String test;
     //creates ArrayList which holds data for each dataset
     List<Entry> valsComp1 = new ArrayList<Entry>();
     List<Entry> valsComp2 = new ArrayList<Entry>();
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Entries for worksite 1 (EBR)
+        valsComp1.add(new Entry(4, 9993.44f));// loop friendly way to add values
+
         Entry c1e1 = new Entry(0f, 875.86f);
         valsComp1.add(c1e1);
         Entry c1e2 = new Entry(1f, 1252.61f);
@@ -181,6 +188,33 @@ public class MainActivity extends AppCompatActivity {
         lineChart.setData(data);
         lineChart.invalidate();
 
+        //setURL();
+
+    }
+
+    public void setURL(){
+        try {
+            URL url = new URL(JSON_STRING);
+            HttpURLConnection httpURLConnection =(HttpURLConnection) url.openConnection();
+            InputStream inputStream = httpURLConnection.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((JSON_STRING= bufferedReader.readLine())!= null)
+            {
+                stringBuilder.append(JSON_STRING+"\n");
+            }
+
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+           test = stringBuilder.toString().trim();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
         public void addListenerebr(){
@@ -193,8 +227,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if(((CheckBox) v).isChecked()){
                     setComp1.setVisible(false);
+
+
                 }else
                     setComp1.setVisible(true);
+
 
             }
         });
