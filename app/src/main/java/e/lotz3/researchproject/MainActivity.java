@@ -1,11 +1,16 @@
 package e.lotz3.researchproject;
 
 
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -20,6 +25,10 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineRadarDataSet;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,10 +41,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private String TAG = MainActivity.class.getSimpleName();
     LineChart lineChart;//creates linechart
     LineDataSet setComp1, setComp2, setComp3, setComp4, setComp5, setComp6;
-    String JSON_STRING = "http://morrowrenewablesflowdata.com/Androiddbconnection.php";
+    String JSON_STRING = "http://morrowrenewablesflowdata.com/graphphp.php";
     String test;
     //creates ArrayList which holds data for each dataset
     List<Entry> valsComp1 = new ArrayList<Entry>();
@@ -45,29 +54,31 @@ public class MainActivity extends AppCompatActivity {
     List<Entry> valsComp5 = new ArrayList<Entry>();
     List<Entry> valsComp6 = new ArrayList<Entry>();
     private CheckBox buttonebr, buttonetr, buttonfsc, buttonjdp, buttonphr, buttontcr;
-
+    List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         lineChart = (LineChart) findViewById(R.id.lineChart);
 
-
+        //setURL();
 
         //Entries for worksite 1 (EBR)
-        valsComp1.add(new Entry(4, 9993.44f));// loop friendly way to add values
+        //valsComp1.add(new Entry(4, 9993.44f));// loop friendly way to add values
 
         Entry c1e1 = new Entry(0f, 875.86f);
-        valsComp1.add(c1e1);
+        //valsComp1.add(c1e1);
         Entry c1e2 = new Entry(1f, 1252.61f);
-        valsComp1.add(c1e2);
+        //valsComp1.add(c1e2);
         Entry c1e3 = new Entry(2f, 1305.12f);
-        valsComp1.add(c1e3);
+        //valsComp1.add(c1e3);
         Entry c1e4 = new Entry(3f, 1305.12f);
-        valsComp1.add(c1e4);
+        //valsComp1.add(c1e4);
         //Entries for worksite 2 (ETR)
-        Entry c2e1 = new Entry(0f, 894.87f);
+        Entry c2e1 = new Entry(0f, 894.87888888888888888888888888888888f);
         valsComp2.add(c2e1);
         Entry c2e2 = new Entry(1f, 1028.67f);
         valsComp2.add(c2e2);
@@ -176,8 +187,8 @@ public class MainActivity extends AppCompatActivity {
         addListenertcr();
 
 
-        List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(setComp1);
+
+
         dataSets.add(setComp2);
         dataSets.add(setComp3);
         dataSets.add(setComp4);
@@ -188,36 +199,114 @@ public class MainActivity extends AppCompatActivity {
         lineChart.setData(data);
         lineChart.invalidate();
 
-        //setURL();
+
+
+
+
 
     }
 
-    public void setURL(){
-        try {
-            URL url = new URL(JSON_STRING);
-            HttpURLConnection httpURLConnection =(HttpURLConnection) url.openConnection();
-            InputStream inputStream = httpURLConnection.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder stringBuilder = new StringBuilder();
-            while ((JSON_STRING= bufferedReader.readLine())!= null)
-            {
-                stringBuilder.append(JSON_STRING+"\n");
+    class LongRunningGetIO extends AsyncTask<Void, Void, String> {
+
+        protected String readStream(InputStream in) {
+            StringBuilder sb = new StringBuilder();
+            BufferedReader reader;
+            try {
+                reader = new BufferedReader(new InputStreamReader(in));
+                String nextLine = "";
+                while ((nextLine = reader.readLine()) != null) {
+                    sb.append(nextLine);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            bufferedReader.close();
-            inputStream.close();
-            httpURLConnection.disconnect();
-           test = stringBuilder.toString().trim();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            return sb.toString();
         }
 
+        @Override
+        protected String doInBackground(Void... params) {
+            URL url;
+            HttpURLConnection urlConnection;
+            String text = null;
+
+            try {
+                url = new URL(JSON_STRING);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                InputStream in = urlConnection.getInputStream();
+                text= readStream(in);
+
+            } catch (Exception e) {
+                return e.getLocalizedMessage();
+            }
+            return text;
+        }
+        //Getting huge String into an Array
+        private void loadIntoListView(String json) throws JSONException {
+            //creating a json array from the json string
+            JSONArray jsonArray = new JSONArray(json);
+
+            //creating a string array for listview
+            String[] MMBTU = new String[jsonArray.length()];
+
+            //looping through all the elements in json array
+            for (int i = 0; i <MMBTU.length; i++) {
+
+                //getting json object from the json array
+                JSONObject obj = jsonArray.getJSONObject(i);
+
+                //getting the name from the json object and putting it inside string array
+                MMBTU[i] = obj.getString("30_Day_MA_MMBTU");
+            }
+            //loop that adds array into dataset
+           for(int i = 0; i < MMBTU.length; i++){
+
+                valsComp1.add(new Entry(i, Float.parseFloat(MMBTU[i])));
+
+
+
+            }
+
+
+
+
+
+
+
+            Toast.makeText(getApplicationContext(), MMBTU[20], Toast.LENGTH_LONG).show();
+
+
+        }
+
+        protected void onPostExecute(String results) {
+            if (results != null) {
+                {
+                    super.onPostExecute(results);
+                    //Toast.makeText(getApplicationContext(), results, Toast.LENGTH_SHORT).show();
+                    try {
+                        loadIntoListView(results);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                //EditText et = (EditText) findViewById(R.id.my_edit);
+                //et.setText(results);
+            }
+
+
+        }
+    }
+    //action performed when button is pressed
+    public void buttonaction(View view) {
+        new LongRunningGetIO().execute();
+        dataSets.add(setComp1);
+
     }
 
-        public void addListenerebr(){
+
+
+    public void addListenerebr(){
 
         buttonebr = (CheckBox) findViewById(R.id.ebr);
 
@@ -238,13 +327,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        }
+    }
 
     public void addListeneretr(){
 
-        buttonebr = (CheckBox) findViewById(R.id.etr);
+        buttonetr = (CheckBox) findViewById(R.id.etr);
 
-        buttonebr.setOnClickListener(new View.OnClickListener() {
+        buttonetr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -263,9 +352,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void addListenerfsc(){
 
-        buttonebr = (CheckBox) findViewById(R.id.fsc);
+        buttonfsc = (CheckBox) findViewById(R.id.fsc);
 
-        buttonebr.setOnClickListener(new View.OnClickListener() {
+        buttonfsc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -283,9 +372,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void addListenerjdp(){
 
-        buttonebr = (CheckBox) findViewById(R.id.jdp);
+        buttonjdp = (CheckBox) findViewById(R.id.jdp);
 
-        buttonebr.setOnClickListener(new View.OnClickListener() {
+        buttonjdp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -303,9 +392,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void addListenerphr(){
 
-        buttonebr = (CheckBox) findViewById(R.id.phr);
+        buttonphr = (CheckBox) findViewById(R.id.phr);
 
-        buttonebr.setOnClickListener(new View.OnClickListener() {
+        buttonphr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -323,9 +412,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void addListenertcr(){
 
-        buttonebr = (CheckBox) findViewById(R.id.tcr);
+        buttontcr = (CheckBox) findViewById(R.id.tcr);
 
-        buttonebr.setOnClickListener(new View.OnClickListener() {
+        buttontcr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -340,8 +429,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
 }
