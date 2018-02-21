@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     String JSON_STRING5 = "http://morrowrenewablesflowdata.com/phr_graph.php";
     String JSON_STRING6 = "http://morrowrenewablesflowdata.com/mls_graph.php";
     String JSON_STRING7 = "http://morrowrenewablesflowdata.com/tcr_graph.php";
+    String[] info;
 
     String test;
     //creates ArrayList which holds data for each dataset
@@ -76,13 +77,7 @@ public class MainActivity extends AppCompatActivity {
         //Entries for worksite 1 (EBR)
 
 
-        Entry c1e1 = new Entry(0f, 875.86f);
-        //valsComp1.add(c1e1);
-        Entry c1e2 = new Entry(1f, 1252.61f);
-        //valsComp1.add(c1e2);
-        Entry c1e3 = new Entry(2f, 1305.12f);
-        //valsComp1.add(c1e3);
-        Entry c1e4 = new Entry(3f, 1305.12f);
+
         //valsComp1.add(c1e4);
         //Entries for worksite 2 (ETR)
         Entry c2e1 = new Entry(0f, 894.87888888888888888888888888888888f);
@@ -256,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
             JSONArray jsonArray = new JSONArray(json);
 
             //creating a string array for listview
-            String[] MMBTU = new String[jsonArray.length()];
+            String [] MMBTU = new String[jsonArray.length()];
 
             //looping through all the elements in json array
             for (int i = 0; i <MMBTU.length; i++) {
@@ -267,11 +262,11 @@ public class MainActivity extends AppCompatActivity {
                 //getting the name from the json object and putting it inside string array
                 MMBTU[i] = obj.getString("30_Day_MA_MMBTU");
             }
-
-
             for(int i =0; i<MMBTU.length; i++){
                 valsComp1.add(new Entry(i, Float.parseFloat(MMBTU[i])));
             }
+            Toast.makeText(getApplicationContext(), MMBTU[0], Toast.LENGTH_LONG).show();
+            info = MMBTU.clone();
 
 
 
@@ -284,7 +279,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            Toast.makeText(getApplicationContext(), MMBTU[20], Toast.LENGTH_LONG).show();
+
+
+
+            //Toast.makeText(getApplicationContext(), MMBTU[20], Toast.LENGTH_LONG).show();
 
 
         }
@@ -309,10 +307,23 @@ public class MainActivity extends AppCompatActivity {
     }
     //action performed when button is pressed
     public void buttonaction(View view) {
-        new LongRunningGetIO().execute();
+        getinfo(JSON_STRING2);
+        datasetcreator();
         dataSets.add(setComp1);
 
+
     }
+    public void getinfo(String php){
+        JSON_STRING=php;
+        new LongRunningGetIO().execute();
+    }
+    public void datasetcreator(){
+
+        //
+
+
+    }
+
 
 
 
