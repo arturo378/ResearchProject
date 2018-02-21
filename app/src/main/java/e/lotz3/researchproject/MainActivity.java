@@ -44,7 +44,14 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = MainActivity.class.getSimpleName();
     LineChart lineChart;//creates linechart
     LineDataSet setComp1, setComp2, setComp3, setComp4, setComp5, setComp6;
-    String JSON_STRING = "http://morrowrenewablesflowdata.com/graphphp.php";
+    String JSON_STRING = "http://morrowrenewablesflowdata.com/ebr_graph.php";
+    String JSON_STRING2 = "http://morrowrenewablesflowdata.com/etr_graph.php";
+    String JSON_STRING3 = "http://morrowrenewablesflowdata.com/fsc_graph.php";
+    String JSON_STRING4= "http://morrowrenewablesflowdata.com/jdp_graph.php";
+    String JSON_STRING5 = "http://morrowrenewablesflowdata.com/phr_graph.php";
+    String JSON_STRING6 = "http://morrowrenewablesflowdata.com/mls_graph.php";
+    String JSON_STRING7 = "http://morrowrenewablesflowdata.com/tcr_graph.php";
+
     String test;
     //creates ArrayList which holds data for each dataset
     List<Entry> valsComp1 = new ArrayList<Entry>();
@@ -64,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
         lineChart = (LineChart) findViewById(R.id.lineChart);
 
-        //setURL();
+
 
         //Entries for worksite 1 (EBR)
-        //valsComp1.add(new Entry(4, 9993.44f));// loop friendly way to add values
+
 
         Entry c1e1 = new Entry(0f, 875.86f);
         //valsComp1.add(c1e1);
@@ -188,7 +195,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        XAxis xAxis = lineChart.getXAxis();
 
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         dataSets.add(setComp2);
         dataSets.add(setComp3);
         dataSets.add(setComp4);
@@ -258,14 +267,16 @@ public class MainActivity extends AppCompatActivity {
                 //getting the name from the json object and putting it inside string array
                 MMBTU[i] = obj.getString("30_Day_MA_MMBTU");
             }
-            //loop that adds array into dataset
-           for(int i = 0; i < MMBTU.length; i++){
 
+
+            for(int i =0; i<MMBTU.length; i++){
                 valsComp1.add(new Entry(i, Float.parseFloat(MMBTU[i])));
-
-
-
             }
+
+
+
+
+
 
 
 
@@ -282,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
             if (results != null) {
                 {
                     super.onPostExecute(results);
-                    //Toast.makeText(getApplicationContext(), results, Toast.LENGTH_SHORT).show();
+
                     try {
                         loadIntoListView(results);
                     } catch (JSONException e) {
@@ -290,8 +301,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                //EditText et = (EditText) findViewById(R.id.my_edit);
-                //et.setText(results);
+
             }
 
 
