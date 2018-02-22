@@ -37,6 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
     String JSON_STRING5 = "http://morrowrenewablesflowdata.com/phr_graph.php";
     String JSON_STRING6 = "http://morrowrenewablesflowdata.com/mls_graph.php";
     String JSON_STRING7 = "http://morrowrenewablesflowdata.com/tcr_graph.php";
-    String[] info;
+    ArrayList<String> info = new ArrayList<String>();
+
 
     String test;
     //creates ArrayList which holds data for each dataset
@@ -261,12 +263,14 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU[i] = obj.getString("30_Day_MA_MMBTU");
+
             }
             for(int i =0; i<MMBTU.length; i++){
-                valsComp1.add(new Entry(i, Float.parseFloat(MMBTU[i])));
+                info.add(MMBTU[i]);
+
             }
-            Toast.makeText(getApplicationContext(), MMBTU[0], Toast.LENGTH_LONG).show();
-            info = MMBTU.clone();
+            //Toast.makeText(getApplicationContext(), MMBTU[0], Toast.LENGTH_LONG).show();
+
 
 
 
@@ -307,8 +311,9 @@ public class MainActivity extends AppCompatActivity {
     }
     //action performed when button is pressed
     public void buttonaction(View view) {
-        getinfo(JSON_STRING2);
+        getinfo(JSON_STRING);
         datasetcreator();
+        //Toast.makeText(getApplicationContext(), Arrays.toString(new ArrayList[]{info}), Toast.LENGTH_LONG).show();
         dataSets.add(setComp1);
 
 
@@ -318,6 +323,10 @@ public class MainActivity extends AppCompatActivity {
         new LongRunningGetIO().execute();
     }
     public void datasetcreator(){
+        for(int i =0; i<info.size(); i++){
+
+            valsComp1.add(new Entry(i, Float.parseFloat(info.get(i))));
+        }
 
         //
 
@@ -353,6 +362,7 @@ public class MainActivity extends AppCompatActivity {
     public void addListeneretr(){
 
         buttonetr = (CheckBox) findViewById(R.id.etr);
+        lineChart.invalidate();
 
         buttonetr.setOnClickListener(new View.OnClickListener() {
             @Override
