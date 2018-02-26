@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,24 +39,31 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private String TAG = MainActivity.class.getSimpleName();
     LineChart lineChart;//creates linechart
-    LineDataSet setComp1, setComp2, setComp3, setComp4, setComp5, setComp6;
+    LineDataSet setComp1, setComp2, setComp3, setComp4, setComp5, setComp6, setComp7;
     String JSON_STRING = "http://morrowrenewablesflowdata.com/ebr_graph.php";
     String JSON_STRING2 = "http://morrowrenewablesflowdata.com/etr_graph.php";
     String JSON_STRING3 = "http://morrowrenewablesflowdata.com/fsc_graph.php";
     String JSON_STRING4= "http://morrowrenewablesflowdata.com/jdp_graph.php";
     String JSON_STRING5 = "http://morrowrenewablesflowdata.com/phr_graph.php";
-    String JSON_STRING6 = "http://morrowrenewablesflowdata.com/mls_graph.php";
-    String JSON_STRING7 = "http://morrowrenewablesflowdata.com/tcr_graph.php";
+    String JSON_STRING6 = "http://morrowrenewablesflowdata.com/tcr_graph.php";
+    String JSON_STRING7 = "http://morrowrenewablesflowdata.com/mls_graph.php";
     ArrayList<String> info = new ArrayList<String>();
+    ArrayList<String> info2 = new ArrayList<String>();
+    ArrayList<String> info3 = new ArrayList<String>();
+    ArrayList<String> info4 = new ArrayList<String>();
+    ArrayList<String> info5 = new ArrayList<String>();
+    ArrayList<String> info6 = new ArrayList<String>();
+    ArrayList<String> info7 = new ArrayList<String>();
 
 
-    String test;
+
     //creates ArrayList which holds data for each dataset
     List<Entry> valsComp1 = new ArrayList<Entry>();
     List<Entry> valsComp2 = new ArrayList<Entry>();
@@ -63,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     List<Entry> valsComp4 = new ArrayList<Entry>();
     List<Entry> valsComp5 = new ArrayList<Entry>();
     List<Entry> valsComp6 = new ArrayList<Entry>();
+    List<Entry> valsComp7 = new ArrayList<Entry>();
     private CheckBox buttonebr, buttonetr, buttonfsc, buttonjdp, buttonphr, buttontcr;
     List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
     @Override
@@ -77,79 +86,42 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Entries for worksite 1 (EBR)
-
-
+        Entry c1e1 = new Entry(0f, 0f);
+        valsComp1.add(c1e1);
 
         //valsComp1.add(c1e4);
         //Entries for worksite 2 (ETR)
-        Entry c2e1 = new Entry(0f, 894.87888888888888888888888888888888f);
+        Entry c2e1 = new Entry(0f, 0f);
         valsComp2.add(c2e1);
-        Entry c2e2 = new Entry(1f, 1028.67f);
-        valsComp2.add(c2e2);
-        Entry c2e3 = new Entry(2f, 947.4f);
-        valsComp2.add(c2e3);
-        Entry c2e4 = new Entry(3f, 947.4f);
-        valsComp2.add(c2e4);
-        Entry c2e5 = new Entry(4f, 939.13f);
-        valsComp2.add(c2e5);
-        Entry c2e6 = new Entry(5f, 939.03f);
-        valsComp2.add(c2e6);
+
         //Entries for worksite 3 (FSC)
         Entry c3e1 = new Entry(0f, 1260.43f);
         valsComp3.add(c3e1);
-        Entry c3e2 = new Entry(1f, 1252.97f);
-        valsComp3.add(c3e2);
-        Entry c3e3 = new Entry(2f, 947.4f);
-        valsComp3.add(c3e3);
-        Entry c3e4 = new Entry(3f, 1456.43f);
-        valsComp3.add(c3e4);
-        Entry c3e5 = new Entry(4f, 1520.17f);
-        valsComp3.add(c3e5);
-        Entry c3e6 = new Entry(5f, 1205f);
-        valsComp3.add(c3e6);
-        Entry c3e7 = new Entry(6f, 1442.43f);
-        valsComp3.add(c3e7);
+
         //Entries for worksite 4 (JDP)
-        Entry c4e1 = new Entry(0f, 1027.66f);
+        Entry c4e1 = new Entry(0f, 0f);
         valsComp4.add(c4e1);
-        Entry c4e2 = new Entry(1f, 1044.46f);
-        valsComp4.add(c4e2);
-        Entry c4e3 = new Entry(2f, 947.4f);
-        valsComp4.add(c4e3);
-        Entry c4e4 = new Entry(3f, 896.34f);
-        valsComp4.add(c4e4);
-        Entry c4e5 = new Entry(4f, 1150.21f);
-        valsComp4.add(c4e5);
-        Entry c4e6 = new Entry(5f, 984.73f);
-        valsComp4.add(c4e6);
-        Entry c4e7 = new Entry(6f, 999.51f);
-        valsComp4.add(c4e7);
-        Entry c4e8 = new Entry(7f, 927.13f);
-        valsComp4.add(c4e8);
+
 
         //Entnries for worksite 5 (PHR)
 
-        Entry c5e2 = new Entry(1f, 1005.8f);
+        Entry c5e2 = new Entry(1f, 0f);
         valsComp5.add(c5e2);
-        Entry c5e3 = new Entry(2f, 947.4f);
-        valsComp5.add(c5e3);
 
 
         //Entries for worksite 6 (TCR)
-        Entry c6e1 = new Entry(0f, 524f);
+        Entry c6e1 = new Entry(0f, 0f);
         valsComp6.add(c6e1);
-        Entry c6e2 = new Entry(1f, 764.36f);
-        valsComp6.add(c6e2);
-        Entry c6e3 = new Entry(2f, 947.4f);
-        valsComp6.add(c6e3);
-        Entry c6e4 = new Entry(3f, 875.24f);
-        valsComp6.add(c6e4);
-        Entry c7e5 = new Entry(4, 1254.28f);
-        valsComp6.add(c7e5);
-        Entry c6e6 = new Entry(5, 1175.15f);
-        valsComp6.add(c6e6);
-        Entry c6e7 = new Entry(6, 1532.33f);
-        valsComp6.add(c6e7);
+
+        for(int i =0; i<300; i++){
+
+            valsComp6.add(new Entry(i, 0f));
+        }
+        //Entries for worksite 7 (MLS)
+        Entry c7e1 = new Entry(0f, 0f);
+        valsComp7.add(c7e1);
+
+
 
 
         //Legend setup
@@ -190,16 +162,24 @@ public class MainActivity extends AppCompatActivity {
         setComp6.setVisible(true);
         addListenertcr();
 
+        setComp7 = new LineDataSet(valsComp7, "MLS");
+        setComp7.setAxisDependency(YAxis.AxisDependency.LEFT);
+        setComp7.setColor(Color.MAGENTA);
+        setComp7.setVisible(true);
+        addListenermls();
 
 
         XAxis xAxis = lineChart.getXAxis();
 
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        dataSets.add(setComp1);
         dataSets.add(setComp2);
         dataSets.add(setComp3);
         dataSets.add(setComp4);
         dataSets.add(setComp5);
         dataSets.add(setComp6);
+        //dataSets.add(setComp7);
+
 
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
@@ -216,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
         protected String readStream(InputStream in) {
             StringBuilder sb = new StringBuilder();
+
             BufferedReader reader;
             try {
                 reader = new BufferedReader(new InputStreamReader(in));
@@ -256,39 +237,25 @@ public class MainActivity extends AppCompatActivity {
             String [] MMBTU = new String[jsonArray.length()];
 
             //looping through all the elements in json array
-            for (int i = 0; i <MMBTU.length; i++) {
+            for (int i = 0; i<MMBTU.length; i++) {
 
                 //getting json object from the json array
                 JSONObject obj = jsonArray.getJSONObject(i);
 
-                //getting the name from the json object and putting it inside string array
-                MMBTU[i] = obj.getString("30_Day_MA_MMBTU");
+                    //getting the name from the json object and putting it inside string array
+                    MMBTU[i] = obj.getString("30_Day_MA_MMBTU");
 
             }
             for(int i =0; i<MMBTU.length; i++){
-                info.add(MMBTU[i]);
+                if(MMBTU[i]==null || MMBTU[i]=="null"){
+                    info.add(i, "0");
+                }else{
+                    info.add(MMBTU[i]);
+                }
+
+
 
             }
-            //Toast.makeText(getApplicationContext(), MMBTU[0], Toast.LENGTH_LONG).show();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //Toast.makeText(getApplicationContext(), MMBTU[20], Toast.LENGTH_LONG).show();
-
-
         }
 
         protected void onPostExecute(String results) {
@@ -298,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         loadIntoListView(results);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -309,28 +277,608 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+    class LongRunningGetIO2 extends AsyncTask<Void, Void, String> {
+
+        protected String readStream(InputStream in) {
+            StringBuilder sb2 = new StringBuilder();
+
+            BufferedReader reader;
+            try {
+                reader = new BufferedReader(new InputStreamReader(in));
+                String nextLine2 = "";
+                while ((nextLine2 = reader.readLine()) != null) {
+                    sb2.append(nextLine2);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sb2.toString();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            URL url2;
+            HttpURLConnection urlConnection;
+            String text2 = null;
+
+            try {
+                url2 = new URL(JSON_STRING2);
+                urlConnection = (HttpURLConnection) url2.openConnection();
+                urlConnection.setRequestMethod("GET");
+                InputStream in = urlConnection.getInputStream();
+                text2= readStream(in);
+
+            } catch (Exception e) {
+                return e.getLocalizedMessage();
+            }
+            return text2;
+        }
+        //Getting huge String into an Array
+        private void loadIntoListView(String json) throws JSONException {
+            //creating a json array from the json string
+            JSONArray jsonArray2 = new JSONArray(json);
+
+            //creating a string array for listview
+            String [] MMBTU2 = new String[jsonArray2.length()];
+
+            //looping through all the elements in json array
+            for (int i = 0; i<MMBTU2.length; i++) {
+
+                //getting json object from the json array
+                JSONObject obj2 = jsonArray2.getJSONObject(i);
+
+                //getting the name from the json object and putting it inside string array
+                MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
+
+            }
+            for(int i =0; i<MMBTU2.length; i++){
+                if(MMBTU2[i]==null || MMBTU2[i]=="null"){
+                    info2.add(i, "0");
+                }else{
+                    info2.add(MMBTU2[i]);
+                }
+
+
+
+            }
+        }
+
+        protected void onPostExecute(String results) {
+            if (results != null) {
+                {
+                    super.onPostExecute(results);
+
+                    try {
+                        loadIntoListView(results);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+
+        }
+    }
+    class LongRunningGetIO3 extends AsyncTask<Void, Void, String> {
+
+        protected String readStream(InputStream in) {
+            StringBuilder sb3 = new StringBuilder();
+
+            BufferedReader reader;
+            try {
+                reader = new BufferedReader(new InputStreamReader(in));
+                String nextLine3 = "";
+                while ((nextLine3 = reader.readLine()) != null) {
+                    sb3.append(nextLine3);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sb3.toString();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            URL url3;
+            HttpURLConnection urlConnection;
+            String text3 = null;
+
+            try {
+                url3 = new URL(JSON_STRING3);
+                urlConnection = (HttpURLConnection) url3.openConnection();
+                urlConnection.setRequestMethod("GET");
+                InputStream in = urlConnection.getInputStream();
+                text3= readStream(in);
+
+            } catch (Exception e) {
+                return e.getLocalizedMessage();
+            }
+            return text3;
+        }
+        //Getting huge String into an Array
+        private void loadIntoListView(String json) throws JSONException {
+            //creating a json array from the json string
+            JSONArray jsonArray3 = new JSONArray(json);
+
+            //creating a string array for listview
+            String [] MMBTU3 = new String[jsonArray3.length()];
+
+            //looping through all the elements in json array
+            for (int i = 0; i<MMBTU3.length; i++) {
+
+                //getting json object from the json array
+                JSONObject obj2 = jsonArray3.getJSONObject(i);
+
+                //getting the name from the json object and putting it inside string array
+                MMBTU3[i] = obj2.getString("30_Day_MA_MMBTU");
+
+            }
+            for(int i =0; i<MMBTU3.length; i++){
+                if(MMBTU3[i]==null || MMBTU3[i]=="null"){
+                    info3.add(i, "0");
+                }else{
+                    info3.add(MMBTU3[i]);
+                }
+
+
+
+            }
+        }
+
+        protected void onPostExecute(String results) {
+            if (results != null) {
+                {
+                    super.onPostExecute(results);
+
+                    try {
+                        loadIntoListView(results);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+
+        }
+    }
+    class LongRunningGetIO4 extends AsyncTask<Void, Void, String> {
+
+        protected String readStream(InputStream in) {
+            StringBuilder sb2 = new StringBuilder();
+
+            BufferedReader reader;
+            try {
+                reader = new BufferedReader(new InputStreamReader(in));
+                String nextLine2 = "";
+                while ((nextLine2 = reader.readLine()) != null) {
+                    sb2.append(nextLine2);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sb2.toString();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            URL url2;
+            HttpURLConnection urlConnection;
+            String text2 = null;
+
+            try {
+                url2 = new URL(JSON_STRING4);
+                urlConnection = (HttpURLConnection) url2.openConnection();
+                urlConnection.setRequestMethod("GET");
+                InputStream in = urlConnection.getInputStream();
+                text2= readStream(in);
+
+            } catch (Exception e) {
+                return e.getLocalizedMessage();
+            }
+            return text2;
+        }
+        //Getting huge String into an Array
+        private void loadIntoListView(String json) throws JSONException {
+            //creating a json array from the json string
+            JSONArray jsonArray2 = new JSONArray(json);
+
+            //creating a string array for listview
+            String [] MMBTU2 = new String[jsonArray2.length()];
+
+            //looping through all the elements in json array
+            for (int i = 0; i<MMBTU2.length; i++) {
+
+                //getting json object from the json array
+                JSONObject obj2 = jsonArray2.getJSONObject(i);
+
+                //getting the name from the json object and putting it inside string array
+                MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
+
+            }
+            for(int i =0; i<MMBTU2.length; i++){
+                if(MMBTU2[i]==null || MMBTU2[i]=="null"){
+                    info4.add(i, "0");
+                }else{
+                    info4.add(MMBTU2[i]);
+                }
+
+
+
+            }
+        }
+
+        protected void onPostExecute(String results) {
+            if (results != null) {
+                {
+                    super.onPostExecute(results);
+
+                    try {
+                        loadIntoListView(results);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+
+        }
+    }
+    class LongRunningGetIO5 extends AsyncTask<Void, Void, String> {
+
+        protected String readStream(InputStream in) {
+            StringBuilder sb2 = new StringBuilder();
+
+            BufferedReader reader;
+            try {
+                reader = new BufferedReader(new InputStreamReader(in));
+                String nextLine2 = "";
+                while ((nextLine2 = reader.readLine()) != null) {
+                    sb2.append(nextLine2);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sb2.toString();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            URL url2;
+            HttpURLConnection urlConnection;
+            String text2 = null;
+
+            try {
+                url2 = new URL(JSON_STRING5);
+                urlConnection = (HttpURLConnection) url2.openConnection();
+                urlConnection.setRequestMethod("GET");
+                InputStream in = urlConnection.getInputStream();
+                text2= readStream(in);
+
+            } catch (Exception e) {
+                return e.getLocalizedMessage();
+            }
+            return text2;
+        }
+        //Getting huge String into an Array
+        private void loadIntoListView(String json) throws JSONException {
+            //creating a json array from the json string
+            JSONArray jsonArray2 = new JSONArray(json);
+
+            //creating a string array for listview
+            String [] MMBTU2 = new String[jsonArray2.length()];
+
+            //looping through all the elements in json array
+            for (int i = 0; i<MMBTU2.length; i++) {
+
+                //getting json object from the json array
+                JSONObject obj2 = jsonArray2.getJSONObject(i);
+
+                //getting the name from the json object and putting it inside string array
+                MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
+
+            }
+            for(int i =0; i<MMBTU2.length; i++){
+                if(MMBTU2[i]==null || MMBTU2[i]=="null"){
+                    info5.add(i, "0");
+                }else{
+                    info5.add(MMBTU2[i]);
+                }
+
+
+
+            }
+        }
+
+        protected void onPostExecute(String results) {
+            if (results != null) {
+                {
+                    super.onPostExecute(results);
+
+                    try {
+                        loadIntoListView(results);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+
+        }
+    }
+    class LongRunningGetIO6 extends AsyncTask<Void, Void, String> {
+
+        protected String readStream(InputStream in) {
+            StringBuilder sb2 = new StringBuilder();
+
+            BufferedReader reader;
+            try {
+                reader = new BufferedReader(new InputStreamReader(in));
+                String nextLine2 = "";
+                while ((nextLine2 = reader.readLine()) != null) {
+                    sb2.append(nextLine2);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sb2.toString();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            URL url2;
+            HttpURLConnection urlConnection;
+            String text2 = null;
+
+            try {
+                url2 = new URL(JSON_STRING6);
+                urlConnection = (HttpURLConnection) url2.openConnection();
+                urlConnection.setRequestMethod("GET");
+                InputStream in = urlConnection.getInputStream();
+                text2= readStream(in);
+
+            } catch (Exception e) {
+                return e.getLocalizedMessage();
+            }
+            return text2;
+        }
+        //Getting huge String into an Array
+        private void loadIntoListView(String json) throws JSONException {
+            //creating a json array from the json string
+            JSONArray jsonArray2 = new JSONArray(json);
+
+            //creating a string array for listview
+            String [] MMBTU2 = new String[jsonArray2.length()];
+
+            //looping through all the elements in json array
+            for (int i = 0; i<MMBTU2.length; i++) {
+
+                //getting json object from the json array
+                JSONObject obj2 = jsonArray2.getJSONObject(i);
+
+                //getting the name from the json object and putting it inside string array
+                MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
+
+            }
+            for(int i =0; i<MMBTU2.length; i++){
+                if(MMBTU2[i]==null || MMBTU2[i]=="null"){
+                    info6.add(i, "0");
+                }else{
+                    info6.add(MMBTU2[i]);
+                }
+
+
+
+            }
+        }
+
+        protected void onPostExecute(String results) {
+            if (results != null) {
+                {
+                    super.onPostExecute(results);
+
+                    try {
+                        loadIntoListView(results);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+
+        }
+    }
+    class LongRunningGetIO7 extends AsyncTask<Void, Void, String> {
+
+        protected String readStream(InputStream in) {
+            StringBuilder sb2 = new StringBuilder();
+
+            BufferedReader reader;
+            try {
+                reader = new BufferedReader(new InputStreamReader(in));
+                String nextLine2 = "";
+                while ((nextLine2 = reader.readLine()) != null) {
+                    sb2.append(nextLine2);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sb2.toString();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            URL url2;
+            HttpURLConnection urlConnection;
+            String text2 = null;
+
+            try {
+                url2 = new URL(JSON_STRING7);
+                urlConnection = (HttpURLConnection) url2.openConnection();
+                urlConnection.setRequestMethod("GET");
+                InputStream in = urlConnection.getInputStream();
+                text2= readStream(in);
+
+            } catch (Exception e) {
+                return e.getLocalizedMessage();
+            }
+            return text2;
+        }
+        //Getting huge String into an Array
+        private void loadIntoListView(String json) throws JSONException {
+            //creating a json array from the json string
+            JSONArray jsonArray2 = new JSONArray(json);
+
+            //creating a string array for listview
+            String [] MMBTU2 = new String[jsonArray2.length()];
+
+            //looping through all the elements in json array
+            for (int i = 0; i<MMBTU2.length; i++) {
+
+                //getting json object from the json array
+                JSONObject obj2 = jsonArray2.getJSONObject(i);
+
+                //getting the name from the json object and putting it inside string array
+                MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
+
+            }
+            for(int i =0; i<MMBTU2.length; i++){
+                if(MMBTU2[i]==null || MMBTU2[i]=="null"){
+                    info7.add(i, "0");
+                }else{
+                    info7.add(MMBTU2[i]);
+                }
+
+
+
+            }
+        }
+
+        protected void onPostExecute(String results) {
+            if (results != null) {
+                {
+                    super.onPostExecute(results);
+
+                    try {
+                        loadIntoListView(results);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            }
+
+
+        }
+    }
+
     //action performed when button is pressed
     public void buttonaction(View view) {
-        getinfo(JSON_STRING);
-        datasetcreator();
-        //Toast.makeText(getApplicationContext(), Arrays.toString(new ArrayList[]{info}), Toast.LENGTH_LONG).show();
+        setComp1.clear();
+        dataSets.clear();
+        datasetcreator_ebr();
         dataSets.add(setComp1);
 
+        setComp2.clear();
+        datasetcreator_etr();
+       dataSets.add(setComp2);
+
+       setComp3.clear();
+       datasetcreator_fsc();
+       dataSets.add(setComp3);
+
+       setComp4.clear();
+       datasetcreator_jdp();
+       dataSets.add(setComp4);
+
+       setComp5.clear();
+       datasetcreator_phr();
+       dataSets.add(setComp5);
+
+       setComp6.clear();
+       datasetcreator_tcr();
+       dataSets.add(setComp6);
+
+       setComp7.clear();
+       datasetcreator_mls();
+       dataSets.add(setComp7);
+
+
+
+
+        Toast.makeText(getApplicationContext(), Arrays.toString(new ArrayList[]{info7}), Toast.LENGTH_SHORT).show();
+
 
     }
-    public void getinfo(String php){
-        JSON_STRING=php;
+    public void datasetcreator_ebr(){
+
         new LongRunningGetIO().execute();
-    }
-    public void datasetcreator(){
+
         for(int i =0; i<info.size(); i++){
 
             valsComp1.add(new Entry(i, Float.parseFloat(info.get(i))));
         }
 
-        //
 
+    }
+    public void datasetcreator_etr(){
 
+        new LongRunningGetIO2().execute();
+        for(int i =0; i<info2.size(); i++){
+
+            valsComp2.add(new Entry(i, Float.parseFloat(info2.get(i))));
+        }
+    }
+    public void datasetcreator_fsc(){
+        new LongRunningGetIO3().execute();
+        for(int i =0; i<info3.size(); i++){
+
+            valsComp3.add(new Entry(i, Float.parseFloat(info3.get(i))));
+        }
+    }
+    public void datasetcreator_jdp(){
+        new LongRunningGetIO4().execute();
+        for(int i =0; i<info4.size(); i++){
+
+            valsComp4.add(new Entry(i, Float.parseFloat(info4.get(i))));
+        }
+    }
+    public void datasetcreator_phr(){
+        new LongRunningGetIO5().execute();
+        for(int i =0; i<info5.size(); i++){
+
+            valsComp5.add(new Entry(i, Float.parseFloat(info5.get(i))));
+        }
+    }
+    public void datasetcreator_tcr(){
+        new LongRunningGetIO6().execute();
+        for(int i =0; i<info6.size(); i++){
+
+            valsComp6.add(new Entry(i, Float.parseFloat(info6.get(i))));
+        }
+    }
+    public void datasetcreator_mls(){
+        new LongRunningGetIO7().execute();
+        for(int i =0; i<info7.size(); i++){
+
+            valsComp7.add(new Entry(i, Float.parseFloat(info7.get(i))));
+        }
     }
 
 
@@ -353,6 +901,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
+
         });
 
 
@@ -453,6 +1002,25 @@ public class MainActivity extends AppCompatActivity {
                     setComp6.setVisible(false);
                 }else
                     setComp6.setVisible(true);
+
+            }
+        });
+
+
+
+    }
+    public void addListenermls(){
+
+        buttontcr = (CheckBox) findViewById(R.id.mls);
+
+        buttontcr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(((CheckBox) v).isChecked()){
+                    setComp7.setVisible(false);
+                }else
+                    setComp7.setVisible(true);
 
             }
         });
