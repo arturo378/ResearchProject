@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         dataSets.add(setComp4);
         dataSets.add(setComp5);
         dataSets.add(setComp6);
-        //dataSets.add(setComp7);
+        dataSets.add(setComp7);
 
 
         LineData data = new LineData(dataSets);
@@ -252,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info.add(MMBTU[i]);
                 }
+                Collections.reverse(info);
 
 
 
@@ -265,6 +266,10 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         loadIntoListView(results);
+
+
+
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -822,7 +827,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Toast.makeText(getApplicationContext(), Arrays.toString(new ArrayList[]{info7}), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), Arrays.toString(new ArrayList[]{info}), Toast.LENGTH_SHORT).show();
 
 
     }
