@@ -37,10 +37,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,6 +66,15 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> info5 = new ArrayList<String>();
     ArrayList<String> info6 = new ArrayList<String>();
     ArrayList<String> info7 = new ArrayList<String>();
+    ArrayList<String> maindate = new ArrayList<String>();
+
+    ArrayList<String> date1 = new ArrayList<String>();
+    ArrayList<String> date2 = new ArrayList<String>();
+    ArrayList<String> date3 = new ArrayList<String>();
+    ArrayList<String> date4 = new ArrayList<String>();
+    ArrayList<String> date5 = new ArrayList<String>();
+    ArrayList<String> date6 = new ArrayList<String>();
+    ArrayList<String> date7 = new ArrayList<String>();
 
 
 
@@ -74,11 +88,29 @@ public class MainActivity extends AppCompatActivity {
     List<Entry> valsComp7 = new ArrayList<Entry>();
     private CheckBox buttonebr, buttonetr, buttonfsc, buttonjdp, buttonphr, buttontcr;
     List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+    Calendar cal = Calendar.getInstance();
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        maindate.add(dateFormat.format(cal.getTime()));
+        for(int i = 0; i<=364; i++){
+            int a = -1;
+            cal.add(Calendar.DATE, a);
+            maindate.add(dateFormat.format(cal.getTime()));
+
+            a--;
+
+
+        }
+        Collections.reverse(maindate);
+
+
+
+        cal.add(Calendar.DATE, -1);
+        maindate.add(dateFormat.format(cal.getTime()));
 
 
         lineChart = (LineChart) findViewById(R.id.lineChart);
@@ -88,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         //Entries for worksite 1 (EBR)
         Entry c1e1 = new Entry(0f, 0f);
         valsComp1.add(c1e1);
+
 
         //valsComp1.add(c1e4);
         //Entries for worksite 2 (ETR)
@@ -113,13 +146,20 @@ public class MainActivity extends AppCompatActivity {
         Entry c6e1 = new Entry(0f, 0f);
         valsComp6.add(c6e1);
 
-        for(int i =0; i<300; i++){
 
-            valsComp6.add(new Entry(i, 0f));
-        }
         //Entries for worksite 7 (MLS)
         Entry c7e1 = new Entry(0f, 0f);
         valsComp7.add(c7e1);
+
+
+        XAxis xaxis = lineChart.getXAxis();
+        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        YAxis yaxis = lineChart.getAxis(YAxis.AxisDependency.LEFT);
+        xaxis.setAxisMaximum(0);
+        xaxis.setAxisMaximum(365);
+        yaxis.setAxisMinimum(400);
+        yaxis.setAxisMaximum(1600);
+
 
 
 
@@ -128,43 +168,45 @@ public class MainActivity extends AppCompatActivity {
         setComp1 = new LineDataSet(valsComp1, "EBR");
         setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp1.setColor(Color.YELLOW);
-        setComp1.setDrawCircles(true);
+        setComp1.setDrawCircles(false);
         addListenerebr();
 
 
         setComp2 = new LineDataSet(valsComp2, "ETR");
         setComp2.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp2.setColor(Color.MAGENTA);
-        setComp2.setDrawCircles(true);
+        setComp2.setDrawCircles(false);
         addListeneretr();
 
         setComp3 = new LineDataSet(valsComp3, "FSC");
         setComp3.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp3.setColor(Color.GREEN);
-        setComp3.setDrawCircles(true);
+        setComp3.setDrawCircles(false);
         addListenerfsc();
 
         setComp4 = new LineDataSet(valsComp4, "JDP");
         setComp4.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp4.setColor(Color.BLUE);
-        setComp4.setDrawCircles(true);
+        setComp4.setDrawCircles(false);
         addListenerjdp();
 
         setComp5 = new LineDataSet(valsComp5, "PHR");
         setComp5.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp5.setColor(Color.BLACK);
-        setComp5.setDrawCircles(true);
+        setComp5.setDrawCircles(false);
         addListenerphr();
 
         setComp6 = new LineDataSet(valsComp6, "TCR");
         setComp6.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp6.setColor(Color.RED);
+        setComp6.setDrawCircles(false);
         setComp6.setVisible(true);
         addListenertcr();
 
         setComp7 = new LineDataSet(valsComp7, "MLS");
         setComp7.setAxisDependency(YAxis.AxisDependency.LEFT);
         setComp7.setColor(Color.MAGENTA);
+        setComp7.setDrawCircles(false);
         setComp7.setVisible(true);
         addListenermls();
 
@@ -235,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
 
             //creating a string array for listview
             String [] MMBTU = new String[jsonArray.length()];
+            String [] date = new String[jsonArray.length()];
 
             //looping through all the elements in json array
             for (int i = 0; i<MMBTU.length; i++) {
@@ -244,15 +287,23 @@ public class MainActivity extends AppCompatActivity {
 
                     //getting the name from the json object and putting it inside string array
                     MMBTU[i] = obj.getString("30_Day_MA_MMBTU");
+                    //date[i]= obj.getString("Date");
+                    date1.add(obj.getString("Date"));
 
             }
             for(int i =0; i<MMBTU.length; i++){
+
+
                 if(MMBTU[i]==null || MMBTU[i]=="null"){
-                    info.add(i, "0");
+
+                    MMBTU[i] = MMBTU[i-1];
+                    info.add(MMBTU[i]);
                 }else{
                     info.add(MMBTU[i]);
                 }
-                Collections.reverse(info);
+                //Collections.reverse(info);
+                Collections.reverse(date1);
+
 
 
 
@@ -334,14 +385,18 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
+                date2.add(obj2.getString("Date"));
 
             }
             for(int i =0; i<MMBTU2.length; i++){
                 if(MMBTU2[i]==null || MMBTU2[i]=="null"){
-                    info2.add(i, "0");
+                    MMBTU2[i] = MMBTU2[i-1];
+                    info2.add(MMBTU2[i]);
                 }else{
                     info2.add(MMBTU2[i]);
                 }
+                //Collections.reverse(info2);
+                Collections.reverse(date2);
 
 
 
@@ -419,15 +474,18 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU3[i] = obj2.getString("30_Day_MA_MMBTU");
+                date3.add(obj2.getString("Date"));
 
             }
             for(int i =0; i<MMBTU3.length; i++){
                 if(MMBTU3[i]==null || MMBTU3[i]=="null"){
-                    info3.add(i, "0");
+                    MMBTU3[i] = MMBTU3[i-1];
+                    info3.add(MMBTU3[i]);
                 }else{
                     info3.add(MMBTU3[i]);
                 }
-
+                //Collections.reverse(info3);
+                Collections.reverse(date3);
 
 
             }
@@ -504,14 +562,18 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
+                date4.add(obj2.getString("Date"));
 
             }
             for(int i =0; i<MMBTU2.length; i++){
                 if(MMBTU2[i]==null || MMBTU2[i]=="null"){
-                    info4.add(i, "0");
+                    MMBTU2[i] = MMBTU2[i-1];
+                    info4.add(MMBTU2[i]);
                 }else{
                     info4.add(MMBTU2[i]);
                 }
+                //Collections.reverse(info4);
+                Collections.reverse((date4));
 
 
 
@@ -589,15 +651,18 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
+                date5.add(obj2.getString("Date"));
 
             }
             for(int i =0; i<MMBTU2.length; i++){
                 if(MMBTU2[i]==null || MMBTU2[i]=="null"){
-                    info5.add(i, "0");
+                    MMBTU2[i] = MMBTU2[i-1];
+                    info5.add(MMBTU2[i]);
                 }else{
                     info5.add(MMBTU2[i]);
                 }
-
+                //Collections.reverse(info5);
+                Collections.reverse(date5);
 
 
             }
@@ -674,14 +739,18 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
+                date6.add(obj2.getString("Date"));
 
             }
             for(int i =0; i<MMBTU2.length; i++){
                 if(MMBTU2[i]==null || MMBTU2[i]=="null"){
-                    info6.add(i, "0");
+                    MMBTU2[i] = MMBTU2[i-1];
+                    info6.add(MMBTU2[i]);
                 }else{
                     info6.add(MMBTU2[i]);
                 }
+               // Collections.reverse(info6);
+                Collections.reverse(date6);
 
 
 
@@ -759,14 +828,19 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
+                date7.add(obj2.getString("Date"));
 
             }
             for(int i =0; i<MMBTU2.length; i++){
                 if(MMBTU2[i]==null || MMBTU2[i]=="null"){
-                    info7.add(i, "0");
+                    MMBTU2[i] = MMBTU2[i-1];
+                    info7.add(MMBTU2[i]);
                 }else{
                     info7.add(MMBTU2[i]);
                 }
+                //Collections.reverse(info7);
+                Collections.reverse(date7);
+
 
 
 
@@ -828,6 +902,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         Toast.makeText(getApplicationContext(), Arrays.toString(new ArrayList[]{info}), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), info7.size(), Toast.LENGTH_SHORT).show();
+
 
 
     }
@@ -839,6 +915,7 @@ public class MainActivity extends AppCompatActivity {
 
             valsComp1.add(new Entry(i, Float.parseFloat(info.get(i))));
         }
+
 
 
     }
@@ -899,10 +976,13 @@ public class MainActivity extends AppCompatActivity {
 
                 if(((CheckBox) v).isChecked()){
                     setComp1.setVisible(false);
+                    lineChart.invalidate();
+
 
 
                 }else
                     setComp1.setVisible(true);
+                lineChart.invalidate();
 
 
             }
@@ -924,8 +1004,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(((CheckBox) v).isChecked()){
                     setComp2.setVisible(false);
+                    lineChart.invalidate();
                 }else
                     setComp2.setVisible(true);
+                lineChart.invalidate();
 
             }
         });
@@ -945,8 +1027,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(((CheckBox) v).isChecked()){
                     setComp3.setVisible(false);
+                    lineChart.invalidate();
                 }else
                     setComp3.setVisible(true);
+                lineChart.invalidate();
 
             }
         });
@@ -965,8 +1049,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(((CheckBox) v).isChecked()){
                     setComp4.setVisible(false);
+                    lineChart.invalidate();
                 }else
                     setComp4.setVisible(true);
+                lineChart.invalidate();
 
             }
         });
@@ -985,8 +1071,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(((CheckBox) v).isChecked()){
                     setComp5.setVisible(false);
+                    lineChart.invalidate();
                 }else
                     setComp5.setVisible(true);
+                lineChart.invalidate();
 
             }
         });
@@ -1005,8 +1093,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(((CheckBox) v).isChecked()){
                     setComp6.setVisible(false);
+                    lineChart.invalidate();
                 }else
                     setComp6.setVisible(true);
+                lineChart.invalidate();
 
             }
         });
@@ -1024,8 +1114,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(((CheckBox) v).isChecked()){
                     setComp7.setVisible(false);
+                    lineChart.invalidate();
                 }else
                     setComp7.setVisible(true);
+                lineChart.invalidate();
 
             }
         });
