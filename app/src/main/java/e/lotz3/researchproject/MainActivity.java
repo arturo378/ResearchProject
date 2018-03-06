@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info.add(MMBTU[i]);
                 }
-                //Collections.reverse(info);
+                //
                 Collections.reverse(date1);
 
 
@@ -395,7 +395,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info2.add(MMBTU2[i]);
                 }
-                //Collections.reverse(info2);
+
                 Collections.reverse(date2);
 
 
@@ -484,7 +484,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info3.add(MMBTU3[i]);
                 }
-                //Collections.reverse(info3);
+
                 Collections.reverse(date3);
 
 
@@ -572,7 +572,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info4.add(MMBTU2[i]);
                 }
-                //Collections.reverse(info4);
+
                 Collections.reverse((date4));
 
 
@@ -661,7 +661,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info5.add(MMBTU2[i]);
                 }
-                //Collections.reverse(info5);
+
                 Collections.reverse(date5);
 
 
@@ -749,7 +749,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info6.add(MMBTU2[i]);
                 }
-               // Collections.reverse(info6);
+
                 Collections.reverse(date6);
 
 
@@ -838,7 +838,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info7.add(MMBTU2[i]);
                 }
-                //Collections.reverse(info7);
+
                 Collections.reverse(date7);
 
 
@@ -910,10 +910,10 @@ public class MainActivity extends AppCompatActivity {
     public void datasetcreator_ebr(){
 
         new LongRunningGetIO().execute();
-
+        Collections.reverse(info);
         for(int i =0; i<info.size(); i++){
 
-            valsComp1.add(new Entry(i, Float.parseFloat(info.get(i))));
+            valsComp1.add(new Entry(365-(info.size()-i), Float.parseFloat(info.get(i))));
         }
 
 
@@ -922,44 +922,50 @@ public class MainActivity extends AppCompatActivity {
     public void datasetcreator_etr(){
 
         new LongRunningGetIO2().execute();
+        Collections.reverse(info2);
         for(int i =0; i<info2.size(); i++){
 
-            valsComp2.add(new Entry(i, Float.parseFloat(info2.get(i))));
+            valsComp2.add(new Entry(365-(info2.size()-i), Float.parseFloat(info2.get(i))));
         }
     }
     public void datasetcreator_fsc(){
         new LongRunningGetIO3().execute();
+        Collections.reverse(info3);
         for(int i =0; i<info3.size(); i++){
 
-            valsComp3.add(new Entry(i, Float.parseFloat(info3.get(i))));
+            valsComp3.add(new Entry(365-(info3.size()-i), Float.parseFloat(info3.get(i))));
         }
     }
     public void datasetcreator_jdp(){
         new LongRunningGetIO4().execute();
+        Collections.reverse(info4);
         for(int i =0; i<info4.size(); i++){
 
-            valsComp4.add(new Entry(i, Float.parseFloat(info4.get(i))));
+            valsComp4.add(new Entry(365-(info4.size()-i), Float.parseFloat(info4.get(i))));
         }
     }
     public void datasetcreator_phr(){
         new LongRunningGetIO5().execute();
+        Collections.reverse(info5);
         for(int i =0; i<info5.size(); i++){
 
-            valsComp5.add(new Entry(i, Float.parseFloat(info5.get(i))));
+            valsComp5.add(new Entry(365-(info5.size()-i), Float.parseFloat(info5.get(i))));
         }
     }
     public void datasetcreator_tcr(){
         new LongRunningGetIO6().execute();
+        Collections.reverse(info6);
         for(int i =0; i<info6.size(); i++){
 
-            valsComp6.add(new Entry(i, Float.parseFloat(info6.get(i))));
+            valsComp6.add(new Entry(365-(info6.size()-i), Float.parseFloat(info6.get(i))));
         }
     }
     public void datasetcreator_mls(){
         new LongRunningGetIO7().execute();
+        Collections.reverse(info7);
         for(int i =0; i<info7.size(); i++){
 
-            valsComp7.add(new Entry(i, Float.parseFloat(info7.get(i))));
+            valsComp7.add(new Entry(365-(info7.size()-i), Float.parseFloat(info7.get(i))));
         }
     }
 
