@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> date5 = new ArrayList<String>();
     ArrayList<String> date6 = new ArrayList<String>();
     ArrayList<String> date7 = new ArrayList<String>();
-
+    Button buttonLoad;
 
 
     //creates ArrayList which holds data for each dataset
@@ -227,6 +227,50 @@ public class MainActivity extends AppCompatActivity {
         lineChart.setData(data);
         lineChart.invalidate();
 
+        buttonLoad = (Button)findViewById(R.id.action);
+        buttonLoad.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View arg0) {
+
+                info.clear();
+                info2.clear();
+                info3.clear();
+                info4.clear();
+                info5.clear();
+                info6.clear();
+                info7.clear();
+                dataSets.clear();
+                setComp1.clear();
+                datasetcreator_ebr();
+
+
+                setComp2.clear();
+                datasetcreator_etr();
+
+
+                setComp3.clear();
+                datasetcreator_fsc();
+
+
+                setComp4.clear();
+                datasetcreator_jdp();
+
+
+                setComp5.clear();
+                datasetcreator_phr();
+
+
+                setComp6.clear();
+                datasetcreator_tcr();
+
+
+                setComp7.clear();
+                datasetcreator_mls();
+
+
+
+            }});
 
 
 
@@ -301,13 +345,9 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info.add(MMBTU[i]);
                 }
-                //
-                Collections.reverse(date1);
-
-
-
 
             }
+            Collections.reverse(date1);
         }
 
         protected void onPostExecute(String results) {
@@ -317,10 +357,13 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         loadIntoListView(results);
+                        Collections.reverse(info);
+                        for(int i =0; i<info.size(); i++){
 
-
-
-
+                            valsComp1.add(new Entry(365-(info.size()-i), Float.parseFloat(info.get(i))));
+                        }
+                        dataSets.add(setComp1);
+                        lineChart.invalidate();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -395,12 +438,8 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info2.add(MMBTU2[i]);
                 }
-
-                Collections.reverse(date2);
-
-
-
             }
+            Collections.reverse(date2);
         }
 
         protected void onPostExecute(String results) {
@@ -411,6 +450,13 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         loadIntoListView(results);
 
+                        Collections.reverse(info2);
+                        for(int i =0; i<info2.size(); i++){
+
+                            valsComp2.add(new Entry(365-(info2.size()-i), Float.parseFloat(info2.get(i))));
+                        }
+                        dataSets.add(setComp2);
+                        lineChart.invalidate();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -484,11 +530,8 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info3.add(MMBTU3[i]);
                 }
-
-                Collections.reverse(date3);
-
-
             }
+            Collections.reverse(date3);
         }
 
         protected void onPostExecute(String results) {
@@ -498,6 +541,14 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         loadIntoListView(results);
+
+                        Collections.reverse(info3);
+                        for(int i =0; i<info3.size(); i++){
+
+                            valsComp3.add(new Entry(365-(info3.size()-i), Float.parseFloat(info3.get(i))));
+                        }
+                        dataSets.add(setComp3);
+                        lineChart.invalidate();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -572,12 +623,8 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info4.add(MMBTU2[i]);
                 }
-
-                Collections.reverse((date4));
-
-
-
             }
+            Collections.reverse((date4));
         }
 
         protected void onPostExecute(String results) {
@@ -587,6 +634,13 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         loadIntoListView(results);
+                        Collections.reverse(info4);
+                        for(int i =0; i<info4.size(); i++){
+
+                            valsComp4.add(new Entry(365-(info4.size()-i), Float.parseFloat(info4.get(i))));
+                        }
+                        dataSets.add(setComp4);
+                        lineChart.invalidate();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -661,11 +715,8 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info5.add(MMBTU2[i]);
                 }
-
-                Collections.reverse(date5);
-
-
             }
+            Collections.reverse(date5);
         }
 
         protected void onPostExecute(String results) {
@@ -675,7 +726,13 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         loadIntoListView(results);
+                        Collections.reverse(info5);
+                        for(int i =0; i<info5.size(); i++){
 
+                            valsComp5.add(new Entry(365-(info5.size()-i), Float.parseFloat(info5.get(i))));
+                        }
+                        dataSets.add(setComp5);
+                        lineChart.invalidate();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -749,12 +806,8 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info6.add(MMBTU2[i]);
                 }
-
-                Collections.reverse(date6);
-
-
-
             }
+            Collections.reverse(date6);
         }
 
         protected void onPostExecute(String results) {
@@ -764,7 +817,13 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         loadIntoListView(results);
+                        Collections.reverse(info6);
+                        for(int i =0; i<info6.size(); i++){
 
+                            valsComp6.add(new Entry(365-(info6.size()-i), Float.parseFloat(info6.get(i))));
+                        }
+                        dataSets.add(setComp6);
+                        lineChart.invalidate();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -838,13 +897,8 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     info7.add(MMBTU2[i]);
                 }
-
-                Collections.reverse(date7);
-
-
-
-
             }
+            Collections.reverse(date7);
         }
 
         protected void onPostExecute(String results) {
@@ -854,7 +908,13 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         loadIntoListView(results);
+                        Collections.reverse(info7);
+                        for(int i =0; i<info7.size(); i++){
 
+                            valsComp7.add(new Entry(365-(info7.size()-i), Float.parseFloat(info7.get(i))));
+                        }
+                        dataSets.add(setComp7);
+                        lineChart.invalidate();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -867,54 +927,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //action performed when button is pressed
-    public void buttonaction(View view) {
-        setComp1.clear();
-        dataSets.clear();
-        datasetcreator_ebr();
-        dataSets.add(setComp1);
 
-        setComp2.clear();
-        datasetcreator_etr();
-       dataSets.add(setComp2);
-
-       setComp3.clear();
-       datasetcreator_fsc();
-       dataSets.add(setComp3);
-
-       setComp4.clear();
-       datasetcreator_jdp();
-       dataSets.add(setComp4);
-
-       setComp5.clear();
-       datasetcreator_phr();
-       dataSets.add(setComp5);
-
-       setComp6.clear();
-       datasetcreator_tcr();
-       dataSets.add(setComp6);
-
-       setComp7.clear();
-       datasetcreator_mls();
-       dataSets.add(setComp7);
-
-
-
-
-        Toast.makeText(getApplicationContext(), Arrays.toString(new ArrayList[]{info}), Toast.LENGTH_SHORT).show();
-        //Toast.makeText(getApplicationContext(), info7.size(), Toast.LENGTH_SHORT).show();
-
-
-
-    }
     public void datasetcreator_ebr(){
 
         new LongRunningGetIO().execute();
-        Collections.reverse(info);
-        for(int i =0; i<info.size(); i++){
 
-            valsComp1.add(new Entry(365-(info.size()-i), Float.parseFloat(info.get(i))));
-        }
 
 
 
@@ -922,51 +939,27 @@ public class MainActivity extends AppCompatActivity {
     public void datasetcreator_etr(){
 
         new LongRunningGetIO2().execute();
-        Collections.reverse(info2);
-        for(int i =0; i<info2.size(); i++){
 
-            valsComp2.add(new Entry(365-(info2.size()-i), Float.parseFloat(info2.get(i))));
-        }
     }
     public void datasetcreator_fsc(){
         new LongRunningGetIO3().execute();
-        Collections.reverse(info3);
-        for(int i =0; i<info3.size(); i++){
 
-            valsComp3.add(new Entry(365-(info3.size()-i), Float.parseFloat(info3.get(i))));
-        }
     }
     public void datasetcreator_jdp(){
         new LongRunningGetIO4().execute();
-        Collections.reverse(info4);
-        for(int i =0; i<info4.size(); i++){
 
-            valsComp4.add(new Entry(365-(info4.size()-i), Float.parseFloat(info4.get(i))));
-        }
     }
     public void datasetcreator_phr(){
         new LongRunningGetIO5().execute();
-        Collections.reverse(info5);
-        for(int i =0; i<info5.size(); i++){
 
-            valsComp5.add(new Entry(365-(info5.size()-i), Float.parseFloat(info5.get(i))));
-        }
     }
     public void datasetcreator_tcr(){
         new LongRunningGetIO6().execute();
-        Collections.reverse(info6);
-        for(int i =0; i<info6.size(); i++){
 
-            valsComp6.add(new Entry(365-(info6.size()-i), Float.parseFloat(info6.get(i))));
-        }
     }
     public void datasetcreator_mls(){
         new LongRunningGetIO7().execute();
-        Collections.reverse(info7);
-        for(int i =0; i<info7.size(); i++){
 
-            valsComp7.add(new Entry(365-(info7.size()-i), Float.parseFloat(info7.get(i))));
-        }
     }
 
 
