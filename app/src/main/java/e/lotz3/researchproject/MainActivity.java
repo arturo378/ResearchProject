@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> info7 = new ArrayList<String>();
     ArrayList<String> maindate = new ArrayList<String>();
 
+
+
+
     ArrayList<String> date1 = new ArrayList<String>();
     ArrayList<String> date2 = new ArrayList<String>();
     ArrayList<String> date3 = new ArrayList<String>();
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         maindate.add(dateFormat.format(cal.getTime()));
-        for(int i = 0; i<=364; i++){
+        for(int i = 0; i<=363; i++){
             int a = -1;
             cal.add(Calendar.DATE, a);
             maindate.add(dateFormat.format(cal.getTime()));
@@ -225,6 +228,19 @@ public class MainActivity extends AppCompatActivity {
 
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
+
+       Formatter class1 = new Formatter();
+       class1.getStringDatesForXAxis(maindate);
+       for(int i = 0; i<363; i++){
+           class1.getFormattedValue(i, xAxis);
+
+       }
+
+       xAxis.setValueFormatter(class1);
+
+
+
+
         lineChart.invalidate();
 
         buttonLoad = (Button)findViewById(R.id.action);
