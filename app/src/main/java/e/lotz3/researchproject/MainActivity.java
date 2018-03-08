@@ -68,19 +68,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> info7 = new ArrayList<String>();
     ArrayList<String> maindate = new ArrayList<String>();
 
-
-
-
-    ArrayList<String> date1 = new ArrayList<String>();
-    ArrayList<String> date2 = new ArrayList<String>();
-    ArrayList<String> date3 = new ArrayList<String>();
-    ArrayList<String> date4 = new ArrayList<String>();
-    ArrayList<String> date5 = new ArrayList<String>();
-    ArrayList<String> date6 = new ArrayList<String>();
-    ArrayList<String> date7 = new ArrayList<String>();
     Button buttonLoad;
-
-
     //creates ArrayList which holds data for each dataset
     List<Entry> valsComp1 = new ArrayList<Entry>();
     List<Entry> valsComp2 = new ArrayList<Entry>();
@@ -97,33 +85,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        maindate.add(dateFormat.format(cal.getTime()));
-        for(int i = 0; i<=363; i++){
-            int a = -1;
-            cal.add(Calendar.DATE, a);
-            maindate.add(dateFormat.format(cal.getTime()));
-
-            a--;
-
-
-        }
-        Collections.reverse(maindate);
-
-
-
-        cal.add(Calendar.DATE, -1);
-        maindate.add(dateFormat.format(cal.getTime()));
-
-
         lineChart = (LineChart) findViewById(R.id.lineChart);
-
-
 
         //Entries for worksite 1 (EBR)
         Entry c1e1 = new Entry(0f, 0f);
         valsComp1.add(c1e1);
-
 
         //valsComp1.add(c1e4);
         //Entries for worksite 2 (ETR)
@@ -138,34 +104,25 @@ public class MainActivity extends AppCompatActivity {
         Entry c4e1 = new Entry(0f, 0f);
         valsComp4.add(c4e1);
 
-
         //Entnries for worksite 5 (PHR)
-
         Entry c5e2 = new Entry(1f, 0f);
         valsComp5.add(c5e2);
-
 
         //Entries for worksite 6 (TCR)
         Entry c6e1 = new Entry(0f, 0f);
         valsComp6.add(c6e1);
 
-
         //Entries for worksite 7 (MLS)
         Entry c7e1 = new Entry(0f, 0f);
         valsComp7.add(c7e1);
 
-
         XAxis xaxis = lineChart.getXAxis();
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         YAxis yaxis = lineChart.getAxis(YAxis.AxisDependency.LEFT);
-        xaxis.setAxisMaximum(0);
+        xaxis.setAxisMinimum(0);
         xaxis.setAxisMaximum(365);
-        yaxis.setAxisMinimum(400);
-        yaxis.setAxisMaximum(1600);
-
-
-
-
+        yaxis.setAxisMinimum(0);
+        yaxis.setAxisMaximum(1800);
 
         //Legend setup
         setComp1 = new LineDataSet(valsComp1, "EBR");
@@ -213,9 +170,9 @@ public class MainActivity extends AppCompatActivity {
         setComp7.setVisible(true);
         addListenermls();
 
-
+        YAxis rightYAxis = lineChart.getAxisRight();
+        rightYAxis.setEnabled(false);
         XAxis xAxis = lineChart.getXAxis();
-
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         dataSets.add(setComp1);
         dataSets.add(setComp2);
@@ -225,24 +182,10 @@ public class MainActivity extends AppCompatActivity {
         dataSets.add(setComp6);
         dataSets.add(setComp7);
 
-
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
-
-       Formatter class1 = new Formatter();
-       class1.getStringDatesForXAxis(maindate);
-       for(int i = 0; i<363; i++){
-           class1.getFormattedValue(i, xAxis);
-
-       }
-
-       xAxis.setValueFormatter(class1);
-
-
-
-
+        date_generator();
         lineChart.invalidate();
-
         buttonLoad = (Button)findViewById(R.id.action);
         buttonLoad.setOnClickListener(new View.OnClickListener(){
 
@@ -348,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
                     //getting the name from the json object and putting it inside string array
                     MMBTU[i] = obj.getString("30_Day_MA_MMBTU");
                     //date[i]= obj.getString("Date");
-                    date1.add(obj.getString("Date"));
+
 
             }
             for(int i =0; i<MMBTU.length; i++){
@@ -363,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-            Collections.reverse(date1);
+
         }
 
         protected void onPostExecute(String results) {
@@ -444,7 +387,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
-                date2.add(obj2.getString("Date"));
+
 
             }
             for(int i =0; i<MMBTU2.length; i++){
@@ -455,7 +398,7 @@ public class MainActivity extends AppCompatActivity {
                     info2.add(MMBTU2[i]);
                 }
             }
-            Collections.reverse(date2);
+
         }
 
         protected void onPostExecute(String results) {
@@ -536,7 +479,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU3[i] = obj2.getString("30_Day_MA_MMBTU");
-                date3.add(obj2.getString("Date"));
+
 
             }
             for(int i =0; i<MMBTU3.length; i++){
@@ -547,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
                     info3.add(MMBTU3[i]);
                 }
             }
-            Collections.reverse(date3);
+
         }
 
         protected void onPostExecute(String results) {
@@ -629,7 +572,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
-                date4.add(obj2.getString("Date"));
+
 
             }
             for(int i =0; i<MMBTU2.length; i++){
@@ -640,7 +583,7 @@ public class MainActivity extends AppCompatActivity {
                     info4.add(MMBTU2[i]);
                 }
             }
-            Collections.reverse((date4));
+
         }
 
         protected void onPostExecute(String results) {
@@ -721,7 +664,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
-                date5.add(obj2.getString("Date"));
+
 
             }
             for(int i =0; i<MMBTU2.length; i++){
@@ -732,7 +675,6 @@ public class MainActivity extends AppCompatActivity {
                     info5.add(MMBTU2[i]);
                 }
             }
-            Collections.reverse(date5);
         }
 
         protected void onPostExecute(String results) {
@@ -812,8 +754,6 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
-                date6.add(obj2.getString("Date"));
-
             }
             for(int i =0; i<MMBTU2.length; i++){
                 if(MMBTU2[i]==null || MMBTU2[i]=="null"){
@@ -823,7 +763,6 @@ public class MainActivity extends AppCompatActivity {
                     info6.add(MMBTU2[i]);
                 }
             }
-            Collections.reverse(date6);
         }
 
         protected void onPostExecute(String results) {
@@ -903,7 +842,6 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the name from the json object and putting it inside string array
                 MMBTU2[i] = obj2.getString("30_Day_MA_MMBTU");
-                date7.add(obj2.getString("Date"));
 
             }
             for(int i =0; i<MMBTU2.length; i++){
@@ -914,7 +852,6 @@ public class MainActivity extends AppCompatActivity {
                     info7.add(MMBTU2[i]);
                 }
             }
-            Collections.reverse(date7);
         }
 
         protected void onPostExecute(String results) {
@@ -943,6 +880,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void date_generator(){
+        XAxis xAxis = lineChart.getXAxis();
+        maindate.add(dateFormat.format(cal.getTime()));
+        for(int i = 0; i<=363; i++){
+            int a = -1;
+            cal.add(Calendar.DATE, a);
+            maindate.add(dateFormat.format(cal.getTime()));
+            a--;
+        }
+        Collections.reverse(maindate);
+        cal.add(Calendar.DATE, -1);
+        maindate.add(dateFormat.format(cal.getTime()));
+
+        Formatter class1 = new Formatter();
+        class1.getStringDatesForXAxis(maindate);
+        for(int i = 0; i<=365; i++){
+            class1.getFormattedValue(i, xAxis);
+
+        }
+        xAxis.setValueFormatter(class1);
+
+    }
 
     public void datasetcreator_ebr(){
 
