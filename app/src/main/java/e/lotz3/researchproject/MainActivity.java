@@ -2,6 +2,7 @@ package e.lotz3.researchproject;
 
 
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -236,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
     class LongRunningGetIO extends AsyncTask<Void, Void, String> {
 

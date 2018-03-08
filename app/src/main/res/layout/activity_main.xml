@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="e.lotz3.myfirstapp.MainActivity">
+    tools:context="e.lotz3.myfirstapp.MainActivity"
+    >
 
 
     <Button
@@ -20,61 +21,63 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
         android:layout_width="match_parent"
-        android:layout_height="423dp">
+        android:layout_height="match_parent">
 
     </com.github.mikephil.charting.charts.LineChart>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="0">
 
         <CheckBox
             android:id="@+id/ebr"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="EBR"
-            android:onClick="getJson"/>
+            android:onClick="getJson"
+            android:text="EBR" />
 
         <CheckBox
             android:id="@+id/etr"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="ETR" />
 
         <CheckBox
             android:id="@+id/fsc"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="FSC" />
 
         <CheckBox
             android:id="@+id/jdp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="JDP" />
 
         <CheckBox
             android:id="@+id/phr"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="PHR" />
 
         <CheckBox
             android:id="@+id/tcr"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="TCR" />
+
         <CheckBox
             android:id="@+id/mls"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="MLS" />
     </LinearLayout>
